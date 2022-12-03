@@ -1,17 +1,10 @@
-/* Copyright (C) 2022 Mikhail Matyunin - All Rights Reserved
- * You may use, distribute and modify this code under the
- * terms of the GPLv3 license, which unfortunately won't be
- * written for another century.
- *
- * You should have received a copy of the GPLv3 license with
- * this file.
+/*
+ * Copyright (c) 2022. Mikhail Matyunin
  */
 
 use std::io::Write;
 use std::thread;
-use std::thread::sleep;
 use std::time;
-use std::time::Duration;
 use num_format::{Locale, ToFormattedString};
 use memory_stats::memory_stats;
 
@@ -30,7 +23,7 @@ pub fn main() {
     thread::scope(|s| {
         for _ in 0..threads_count {
             s.spawn(|| {
-                sleep(Duration::from_secs(1));
+                thread::sleep(time::Duration::from_secs(1));
                 print!(".");
                 std::io::stdout().flush().unwrap();
             });
@@ -54,7 +47,8 @@ pub fn main() {
         println!("[after ] Current physical memory usage: {}", usage.physical_mem);
         println!("[after ] Current virtual memory usage: {}", usage.virtual_mem);
     }
-    sleep(Duration::from_secs(2));
+
+    thread::sleep(time::Duration::from_secs(2));
 
     if let Some(usage) = memory_stats() {
         println!("[sleep ] Current physical memory usage: {}", usage.physical_mem);
